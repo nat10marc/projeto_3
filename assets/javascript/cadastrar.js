@@ -9,10 +9,18 @@ document.querySelector("#botao-cadastrar").addEventListener("click",() => {
     }
 
     validar(tarefa)
+
+    salvar(tarefa)
     
-    console.log(tarefa)
 
 })
+
+function salvar(tarefa) {
+    const tarefas = JSON.parse(localStorage.getItem("tarefas")) || []
+    tarefas.push(tarefa)
+    localStorage.setItem("tarefas", JSON.stringify(tarefas))
+    window.location.href = "index.html"
+}
 
 function validar(tarefa){
     limparErros()
@@ -29,9 +37,19 @@ function validar(tarefa){
     if (tarefa.pontos <= 0){
         document.querySelector("#pontos").classList.add("is-error")
         document.querySelector("#pontos-erro").innerText = ("pontos deve ser maior que zero")
-    }    
+    }
+
 }
 
 function limparErros(){
-    document.querySelector("input .is-error, textarea .iserror").classList.remove("is-error")
-}
+
+    const campos = document
+                .querySelectorAll("input.is-error, textarea.is-error")
+    
+    campos
+        .forEach((input) => input.classList.remove("is-error"))
+
+    document.querySelectorAll(".nes-field span")
+            .forEach( span => span.innerText = "")
+
+}   
